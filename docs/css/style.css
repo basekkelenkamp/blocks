@@ -1,10 +1,11 @@
 body {
-    background-color: #70CF51;
+    background-color: darkslategray;
     font-family: monospace;
     color:white;
     font-size:22px;
     overflow:hidden;
     margin:0px; padding:0px;
+    transition: 0.6s;
 }
 
 game * {
@@ -36,9 +37,9 @@ startgame {
 }
 
 startgame:hover {
-    filter: hue-rotate(420deg);
+    filter: hue-rotate(200deg);
     font-weight: 1000;
-    transition: 0.35s;
+    transition: 0.5s;
 }
 
 p {

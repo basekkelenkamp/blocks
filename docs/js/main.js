@@ -108,6 +108,7 @@ var Game = (function () {
         this.game.appendChild(this.h1);
         this.h1.style.display = "none";
         this.h1.innerHTML = "GAME OVER";
+        document.body.style.backgroundColor = "rgb(93, 160, 84)";
         this.player = new Player();
         for (var i = 0; i < 20; i++) {
             this.balls.push(new Ball());
@@ -143,13 +144,13 @@ var Game = (function () {
                 if (this.lives == 2) {
                     this.removeBalls();
                     this.player.speed = 4;
-                    document.body.style.backgroundColor = "darkred";
+                    document.body.style.backgroundColor = "rgb(136, 67, 67)";
                     this.counterMax = 30;
                 }
                 if (this.lives == 1) {
                     this.removeBalls();
                     this.player.speed = 1;
-                    document.body.style.backgroundColor = "darkblue";
+                    document.body.style.backgroundColor = "rgb(61, 61, 128)";
                     this.counterMax = 20;
                 }
                 if (this.lives == 0) {
@@ -158,6 +159,7 @@ var Game = (function () {
                     this.counterMax = 180;
                     this.player.speed = 8;
                     this.h1.style.display = "block";
+                    document.body.style.backgroundColor = "darkslategray";
                 }
             }
         }

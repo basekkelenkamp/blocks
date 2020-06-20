@@ -34,8 +34,11 @@ class Game {
         this.h1.innerHTML = `GAME OVER`
 
 
+        document.body.style.backgroundColor = "rgb(93, 160, 84)";
+
         this.player = new Player()
         
+
 
         for (let i = 0; i < 20; i++) {
             this.balls.push(new Ball())
@@ -84,7 +87,7 @@ class Game {
                     
                     this.removeBalls()
                     this.player.speed = 4
-                    document.body.style.backgroundColor = "darkred";
+                    document.body.style.backgroundColor = "rgb(136, 67, 67)";
                     this.counterMax = 30
                 }
 
@@ -92,7 +95,7 @@ class Game {
 
                         this.removeBalls()
                         this.player.speed = 1
-                        document.body.style.backgroundColor = "darkblue";
+                        document.body.style.backgroundColor = "rgb(61, 61, 128)";
                         this.counterMax = 20
 
                     }
@@ -104,6 +107,7 @@ class Game {
                         this.player.speed = 8
 
                         this.h1.style.display = "block"
+                        document.body.style.backgroundColor = "darkslategray";
 
                     }
             }
