@@ -178,7 +178,6 @@ var Game = (function () {
     };
     return Game;
 }());
-window.addEventListener("load", function () { return new Game(); });
 var Player = (function (_super) {
     __extends(Player, _super);
     function Player() {
@@ -253,4 +252,24 @@ var Player = (function (_super) {
     };
     return Player;
 }(GameObject));
+var Start = (function () {
+    function Start() {
+        var _this = this;
+        var game = document.getElementsByTagName("game")[0];
+        this.startGame = document.createElement("startgame");
+        game.appendChild(this.startGame);
+        this.startGame.innerHTML = "Start game";
+        this.p = document.createElement("p");
+        game.appendChild(this.p);
+        this.p.innerHTML = "Resize window to change difficulty.";
+        this.startGame.addEventListener("click", function () { return _this.startNewGame(); });
+    }
+    Start.prototype.startNewGame = function () {
+        this.newGame = new Game();
+        this.startGame.style.display = "none";
+        this.p.style.display = "none";
+    };
+    return Start;
+}());
+window.addEventListener("load", function () { return new Start(); });
 //# sourceMappingURL=main.js.map

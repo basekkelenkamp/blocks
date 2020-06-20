@@ -25,6 +25,27 @@ h1 {
     font-size: 20vw;
 }
 
+startgame {
+    margin-left: 25vw;
+    margin-top: 15vw;
+    font-size: 10vw;
+    color: rgb(34, 34, 71);
+    filter: hue-rotate(0);
+    cursor: pointer;
+    font-weight: 100;
+}
+
+startgame:hover {
+    filter: hue-rotate(420deg);
+    font-weight: 1000;
+    transition: 0.35s;
+}
+
+p {
+    margin-left: 25vw;
+    margin-top: 15vw;
+    font-size: 1.5vw;
+}
 
 player {
     background: rgb(219, 183, 22);
