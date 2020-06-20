@@ -1,0 +1,33 @@
+body {
+    background-color: #70CF51;
+    font-family: monospace;
+    color:white;
+    font-size:22px;
+    overflow:hidden;
+    margin:0px; padding:0px;
+}
+
+game * {
+    position: absolute;
+    display: block;
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+}
+
+
+
+ball {
+    background: black;
+    border-radius: 10%;
+}
+
+h1 {
+    font-size: 20vw;
+}
+
+
+player {
+    background: rgb(219, 183, 22);
+    border-radius: 25%;
+    height: 100px; width: 100px;
+}
