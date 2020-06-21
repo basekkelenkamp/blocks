@@ -3,9 +3,14 @@
 
 class Ball extends GameObject {
     
-    private speedX : number = 1
-    private speedY : number = 1
+    private speedX : number = 0
+    private speedY : number = 0
+    private speedRotate : number = 0
+    private growSpeed : number = 0
+    private maxSize : number = 0
+
     private size : number = 40
+    private randomNr : number = 0
 
 
     constructor() {
@@ -25,6 +30,9 @@ class Ball extends GameObject {
 
         this.speedX = Math.random() * 2
         this.speedY = Math.random() * 2
+        this.speedRotate = Math.random() / 2
+        this.growSpeed = Math.random() / 3
+        this.maxSize = Math.random() * (250 - 150) + 150;
 
         this._x = Math.random() * (window.innerWidth - this.div.clientWidth)
         this._y = Math.random() * (window.innerHeight - this.div.clientHeight)
@@ -37,6 +45,7 @@ class Ball extends GameObject {
       
         if(Math.floor(Math.random() * 2) == 0) {
             this.speedX *= -1
+            this.randomNr = 1
         }
         if(Math.floor(Math.random() * 2) == 0) {
             this.speedY *= -1
@@ -62,6 +71,7 @@ class Ball extends GameObject {
         this.speedY *= -1
     }
 
+
     }
 
     public hit(){
@@ -70,9 +80,21 @@ class Ball extends GameObject {
     }
 
     public grow(){
-        this.size+=0.25
+        this.size+=this.growSpeed
         this.div.style.height = `${this.size}px`
         this.div.style.width = `${this.size}px`
+
+
+        if(this.size > this.maxSize){
+            this.size = this.maxSize
+            if(this.randomNr == 1){
+                this._rotate+=this.speedRotate
+            }else{
+                this._rotate-=this.speedRotate
+            }
+        }
+
+
     }
 
 }

@@ -10,13 +10,11 @@ class Start {
         this.startGame = document.createElement("startgame")
         game.appendChild(this.startGame)
         this.startGame.innerHTML = `Start game`
-        // this.startGame.style.transform = `translate(${window.innerWidth/4}px, ${window.innerHeight/4}px)`
 
 
         this.p = document.createElement("p")
         game.appendChild(this.p)
         this.p.innerHTML = `Resize window to change difficulty.`
-        // this.p.style.transform = `translate(${window.innerWidth/4}px, ${window.innerHeight/4}px)`
 
 
 

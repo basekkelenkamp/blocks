@@ -8,11 +8,14 @@ class Game {
     private balls : Ball[] = []
     private player : Player
     private lives : number = 3
-    private growTime : number = 40
+    private growTime : number = 30
+    private growing : boolean = false
     
     private counter : number = 0
     private counterMax : number = 180
     private points : number = 0
+
+
 
     constructor() {
 
@@ -69,21 +72,30 @@ class Game {
             }
         }
 
+        
+        if(this.growing && this.lives == 1){
+            this.player.speed = 2
+        }
 
 
         for (const ball of this.balls) {
             ball.updateBall()
 
-            for (const otherBall of this.balls) {
-                if(this.checkCollision(ball.getRectangle(),otherBall.getRectangle())){
-                    ball.hit()
-                    otherBall.hit()
+
+            if(!this.growing) {
+                for (const otherBall of this.balls) {
+                    if(this.checkCollision(ball.getRectangle(),otherBall.getRectangle())){
+                        ball.hit()
+                        otherBall.hit()
+                    }
                 }
             }
 
             if(this.balls.length == this.growTime) {
+                this.growing = true
                 ball.grow()
             }
+
 
             
             if(this.checkCollision(ball.getRectangle(),this.player.getRectangle())){
@@ -97,7 +109,7 @@ class Game {
                     this.player.speed = 4
                     document.body.style.backgroundColor = "rgb(136, 67, 67)";
                     this.counterMax = 30
-                    this.growTime = 30
+                    this.growTime = 20
                 }
 
                     if(this.lives == 1) {
@@ -106,9 +118,7 @@ class Game {
                         this.player.speed = 1
                         document.body.style.backgroundColor = "rgb(61, 61, 128)";
                         this.counterMax = 20
-                        this.growTime = 60
-
-
+                        this.growTime = 30
                     }
 
                     if(this.lives == 0) {

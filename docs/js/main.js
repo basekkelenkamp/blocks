@@ -16,6 +16,7 @@ var GameObject = (function () {
     function GameObject() {
         this._x = 0;
         this._y = 0;
+        this._rotate = 0;
         console.log("i'm a game object");
     }
     Object.defineProperty(GameObject.prototype, "x", {
@@ -32,11 +33,18 @@ var GameObject = (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(GameObject.prototype, "rotate", {
+        get: function () {
+            return this._rotate;
+        },
+        enumerable: true,
+        configurable: true
+    });
     GameObject.prototype.getRectangle = function () {
         return this.div.getBoundingClientRect();
     };
     GameObject.prototype.update = function () {
-        this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px)";
+        this.div.style.transform = "translate(" + this.x + "px, " + this.y + "px) rotate(" + this.rotate + "deg)";
     };
     return GameObject;
 }());
@@ -44,9 +52,13 @@ var Ball = (function (_super) {
     __extends(Ball, _super);
     function Ball() {
         var _this = _super.call(this) || this;
-        _this.speedX = 1;
-        _this.speedY = 1;
+        _this.speedX = 0;
+        _this.speedY = 0;
+        _this.speedRotate = 0;
+        _this.growSpeed = 0;
+        _this.maxSize = 0;
         _this.size = 40;
+        _this.randomNr = 0;
         _this.div = document.createElement("ball");
         var game = document.getElementsByTagName("game")[0];
         game.appendChild(_this.div);
@@ -56,6 +68,9 @@ var Ball = (function (_super) {
         _this.div.style.background = "black";
         _this.speedX = Math.random() * 2;
         _this.speedY = Math.random() * 2;
+        _this.speedRotate = Math.random() / 2;
+        _this.growSpeed = Math.random() / 3;
+        _this.maxSize = Math.random() * (250 - 150) + 150;
         _this._x = Math.random() * (window.innerWidth - _this.div.clientWidth);
         _this._y = Math.random() * (window.innerHeight - _this.div.clientHeight);
         if (_this._x < 250 && _this._y < 250) {
@@ -64,6 +79,7 @@ var Ball = (function (_super) {
         }
         if (Math.floor(Math.random() * 2) == 0) {
             _this.speedX *= -1;
+            _this.randomNr = 1;
         }
         if (Math.floor(Math.random() * 2) == 0) {
             _this.speedY *= -1;
@@ -88,9 +104,18 @@ var Ball = (function (_super) {
         this.speedY *= -1;
     };
     Ball.prototype.grow = function () {
-        this.size += 0.25;
+        this.size += this.growSpeed;
         this.div.style.height = this.size + "px";
         this.div.style.width = this.size + "px";
+        if (this.size > this.maxSize) {
+            this.size = this.maxSize;
+            if (this.randomNr == 1) {
+                this._rotate += this.speedRotate;
+            }
+            else {
+                this._rotate -= this.speedRotate;
+            }
+        }
     };
     return Ball;
 }(GameObject));
@@ -99,7 +124,8 @@ var Game = (function () {
         this.game = document.getElementsByTagName("game")[0];
         this.balls = [];
         this.lives = 3;
-        this.growTime = 40;
+        this.growTime = 30;
+        this.growing = false;
         this.counter = 0;
         this.counterMax = 180;
         this.points = 0;
@@ -137,17 +163,23 @@ var Game = (function () {
                 this.balls.push(new Ball());
             }
         }
+        if (this.growing && this.lives == 1) {
+            this.player.speed = 2;
+        }
         for (var _i = 0, _a = this.balls; _i < _a.length; _i++) {
             var ball = _a[_i];
             ball.updateBall();
-            for (var _b = 0, _c = this.balls; _b < _c.length; _b++) {
-                var otherBall = _c[_b];
-                if (this.checkCollision(ball.getRectangle(), otherBall.getRectangle())) {
-                    ball.hit();
-                    otherBall.hit();
+            if (!this.growing) {
+                for (var _b = 0, _c = this.balls; _b < _c.length; _b++) {
+                    var otherBall = _c[_b];
+                    if (this.checkCollision(ball.getRectangle(), otherBall.getRectangle())) {
+                        ball.hit();
+                        otherBall.hit();
+                    }
                 }
             }
             if (this.balls.length == this.growTime) {
+                this.growing = true;
                 ball.grow();
             }
             if (this.checkCollision(ball.getRectangle(), this.player.getRectangle())) {
@@ -158,14 +190,14 @@ var Game = (function () {
                     this.player.speed = 4;
                     document.body.style.backgroundColor = "rgb(136, 67, 67)";
                     this.counterMax = 30;
-                    this.growTime = 30;
+                    this.growTime = 20;
                 }
                 if (this.lives == 1) {
                     this.removeBalls();
                     this.player.speed = 1;
                     document.body.style.backgroundColor = "rgb(61, 61, 128)";
                     this.counterMax = 20;
-                    this.growTime = 60;
+                    this.growTime = 30;
                 }
                 if (this.lives == 0) {
                     this.removeBalls();
