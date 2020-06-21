@@ -28,7 +28,7 @@ h1 {
     font-size: 20vw;
 }
 
-startgame {
+startgame, a {
     margin-left: 25vw;
     margin-top: 15vw;
     font-size: 10vw;
@@ -44,10 +44,21 @@ startgame:hover {
     transition: 0.5s;
 }
 
-p {
+p, a{
     margin-left: 25vw;
     margin-top: 15vw;
     font-size: 1.5vw;
+    text-decoration: none;
+}
+
+a{
+    font-size: 2.5vw;
+    color: white;
+}
+a:hover{
+    font-weight: 3000;
+    color: black;
+    transition: 0.5s;
 }
 
 player {

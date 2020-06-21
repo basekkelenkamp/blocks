@@ -3,6 +3,7 @@ class Game {
     private h1 : HTMLElement
     private h2 : HTMLElement 
     private h3 : HTMLElement
+    private playAgain : HTMLElement
     private game : Element = document.getElementsByTagName("game")[0]
 
     private balls : Ball[] = []
@@ -36,6 +37,14 @@ class Game {
         this.game.appendChild(this.h1)
         this.h1.style.display = "none"
         this.h1.innerHTML = `GAME OVER`
+
+        //Play again
+        this.playAgain = document.createElement("a")
+        this.game.appendChild(this.playAgain)
+        this.playAgain.style.display = "none"
+        this.playAgain.innerHTML = `Play again?`
+        this.playAgain.setAttribute("href","index.html")
+
 
 
         document.body.style.backgroundColor = "rgb(93, 160, 84)";
@@ -128,6 +137,7 @@ class Game {
                         this.player.speed = 8
 
                         this.h1.style.display = "block"
+                        this.playAgain.style.display = "block"
                         document.body.style.backgroundColor = "darkslategray";
 
                     }

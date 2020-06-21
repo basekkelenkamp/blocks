@@ -141,6 +141,11 @@ var Game = (function () {
         this.game.appendChild(this.h1);
         this.h1.style.display = "none";
         this.h1.innerHTML = "GAME OVER";
+        this.playAgain = document.createElement("a");
+        this.game.appendChild(this.playAgain);
+        this.playAgain.style.display = "none";
+        this.playAgain.innerHTML = "Play again?";
+        this.playAgain.setAttribute("href", "index.html");
         document.body.style.backgroundColor = "rgb(93, 160, 84)";
         this.player = new Player();
         for (var i = 0; i < 20; i++) {
@@ -205,6 +210,7 @@ var Game = (function () {
                     this.counterMax = 180;
                     this.player.speed = 8;
                     this.h1.style.display = "block";
+                    this.playAgain.style.display = "block";
                     document.body.style.backgroundColor = "darkslategray";
                 }
             }
