@@ -8,6 +8,7 @@ class Game {
     private balls : Ball[] = []
     private player : Player
     private lives : number = 3
+    private growTime : number = 40
     
     private counter : number = 0
     private counterMax : number = 180
@@ -60,9 +61,12 @@ class Game {
 
         if(this.counter > this.counterMax){
             this.counter = 0
-            this.balls.push(new Ball())
             this.points++
             this.h3.innerHTML = `Points: ${this.points}`
+
+            if(this.balls.length < this.growTime){
+                this.balls.push(new Ball())
+            }
         }
 
 
@@ -77,6 +81,10 @@ class Game {
                 }
             }
 
+            if(this.balls.length == this.growTime) {
+                ball.grow()
+            }
+
             
             if(this.checkCollision(ball.getRectangle(),this.player.getRectangle())){
                 this.lives -= 1
@@ -89,6 +97,7 @@ class Game {
                     this.player.speed = 4
                     document.body.style.backgroundColor = "rgb(136, 67, 67)";
                     this.counterMax = 30
+                    this.growTime = 30
                 }
 
                     if(this.lives == 1) {
@@ -97,6 +106,8 @@ class Game {
                         this.player.speed = 1
                         document.body.style.backgroundColor = "rgb(61, 61, 128)";
                         this.counterMax = 20
+                        this.growTime = 60
+
 
                     }
 

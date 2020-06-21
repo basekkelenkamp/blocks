@@ -46,12 +46,13 @@ var Ball = (function (_super) {
         var _this = _super.call(this) || this;
         _this.speedX = 1;
         _this.speedY = 1;
+        _this.size = 40;
         _this.div = document.createElement("ball");
         var game = document.getElementsByTagName("game")[0];
         game.appendChild(_this.div);
         _this.div.style.transform = "translate(" + _this.x + "px, " + _this.y + "px)";
-        _this.div.style.height = "40px";
-        _this.div.style.width = "40px";
+        _this.div.style.height = _this.size + "px";
+        _this.div.style.width = _this.size + "px";
         _this.div.style.background = "black";
         _this.speedX = Math.random() * 2;
         _this.speedY = Math.random() * 2;
@@ -86,6 +87,11 @@ var Ball = (function (_super) {
         this.speedX *= -1;
         this.speedY *= -1;
     };
+    Ball.prototype.grow = function () {
+        this.size += 0.25;
+        this.div.style.height = this.size + "px";
+        this.div.style.width = this.size + "px";
+    };
     return Ball;
 }(GameObject));
 var Game = (function () {
@@ -93,6 +99,7 @@ var Game = (function () {
         this.game = document.getElementsByTagName("game")[0];
         this.balls = [];
         this.lives = 3;
+        this.growTime = 40;
         this.counter = 0;
         this.counterMax = 180;
         this.points = 0;
@@ -124,9 +131,11 @@ var Game = (function () {
         }
         if (this.counter > this.counterMax) {
             this.counter = 0;
-            this.balls.push(new Ball());
             this.points++;
             this.h3.innerHTML = "Points: " + this.points;
+            if (this.balls.length < this.growTime) {
+                this.balls.push(new Ball());
+            }
         }
         for (var _i = 0, _a = this.balls; _i < _a.length; _i++) {
             var ball = _a[_i];
@@ -138,6 +147,9 @@ var Game = (function () {
                     otherBall.hit();
                 }
             }
+            if (this.balls.length == this.growTime) {
+                ball.grow();
+            }
             if (this.checkCollision(ball.getRectangle(), this.player.getRectangle())) {
                 this.lives -= 1;
                 this.h2.innerHTML = "Lives: " + this.lives;
@@ -146,12 +158,14 @@ var Game = (function () {
                     this.player.speed = 4;
                     document.body.style.backgroundColor = "rgb(136, 67, 67)";
                     this.counterMax = 30;
+                    this.growTime = 30;
                 }
                 if (this.lives == 1) {
                     this.removeBalls();
                     this.player.speed = 1;
                     document.body.style.backgroundColor = "rgb(61, 61, 128)";
                     this.counterMax = 20;
+                    this.growTime = 60;
                 }
                 if (this.lives == 0) {
                     this.removeBalls();
@@ -250,6 +264,12 @@ var Player = (function (_super) {
             this._y = newY;
         if (newX > 0 && newX + this.div.clientWidth < window.innerWidth)
             this._x = newX;
+        if (this._x > window.innerWidth) {
+            this.reset();
+        }
+        if (this._y > window.innerHeight) {
+            this.reset();
+        }
         _super.prototype.update.call(this);
     };
     return Player;

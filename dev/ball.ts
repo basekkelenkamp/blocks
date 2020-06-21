@@ -5,6 +5,7 @@ class Ball extends GameObject {
     
     private speedX : number = 1
     private speedY : number = 1
+    private size : number = 40
 
 
     constructor() {
@@ -16,8 +17,8 @@ class Ball extends GameObject {
         game.appendChild(this.div)
 
         this.div.style.transform = `translate(${this.x}px, ${this.y}px)`
-        this.div.style.height = "40px"
-        this.div.style.width = "40px"
+        this.div.style.height = `${this.size}px`
+        this.div.style.width = `${this.size}px`
         this.div.style.background = "black"
 
         
@@ -66,6 +67,12 @@ class Ball extends GameObject {
     public hit(){
         this.speedX *= -1
         this.speedY *= -1
+    }
+
+    public grow(){
+        this.size+=0.25
+        this.div.style.height = `${this.size}px`
+        this.div.style.width = `${this.size}px`
     }
 
 }

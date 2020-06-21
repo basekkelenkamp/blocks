@@ -85,6 +85,14 @@ class Player extends GameObject {
         if (newY > 0 && newY + this.div.clientHeight < window.innerHeight) this._y = newY
         if (newX > 0 && newX + this.div.clientWidth < window.innerWidth) this._x = newX
 
+        if (this._x > window.innerWidth) {
+            this.reset()
+        }
+
+        if (this._y > window.innerHeight) {
+            this.reset()
+        }
+
         super.update()
 
     }
